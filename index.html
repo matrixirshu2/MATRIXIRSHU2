@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kerala Leave Countdown</title>
+  <title>Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Fonts for a friendly look -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
@@ -10,7 +10,8 @@
     :root {
       --saudi: #0f9d58;
       --kerala: #fcff82;
-      --bg-gradient: linear-gradient(120deg, #43cea2 0%, #185a9d 100%);
+      --bg-gradient: radial-gradient(circle at 60% 40%, #e6fffa 0%, #43cea2 28%, #185a9d 90%);
+      --bg-over: radial-gradient(ellipse at 75% 80%, #ffe8ae88 0%, #fbf8de22 50%, #185a9d00 100%);
       --glass: rgba(255,255,255,0.14);
       --glow: 0 0 60px 8px #f5d83744, 0 0 60px 8px #43cea2aa;
       --shadow: 0 6px 38px 0 rgba(31, 38, 135, 0.22);
@@ -32,11 +33,12 @@
       background-attachment: fixed;
       color: #fff;
       overflow-x: hidden;
+      position: relative;
     }
     .overlay {
       position: fixed;
       inset: 0;
-      background: linear-gradient(120deg, #185a9d88 0%, #43cea277 100%);
+      background: var(--bg-over);
       z-index: 0;
       pointer-events: none;
     }
@@ -49,38 +51,13 @@
       justify-content: center;
       min-height: 100vh;
       padding: 30px 10px;
-    }
-    .profile-pic-card {
-      margin-top: 14px;
-      margin-bottom: 14px;
-      padding: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.10);
-      box-shadow: 0 0 32px 6px #43cea2bb, 0 4px 18px #0003;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pulseGlow 3s infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 24px 4px #43cea2bb, 0 4px 18px #0003; }
-      100% { box-shadow: 0 0 54px 12px #f9f871aa, 0 4px 22px #0004;}
-    }
-    .profile-pic-card img {
-      width: 132px;
-      height: 132px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #fcff82;
-      box-shadow: 0 2px 32px #43cea244;
-      background: #fff;
-      display: block;
+      backdrop-filter: blur(7px);
     }
     .headline {
       font-family: var(--head-font);
       font-size: 2.5rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 28px;
       text-align: center;
       color: #f9f871;
       letter-spacing: 2px;
@@ -89,16 +66,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 4px 10px #0001);
-    }
-    .subtitle {
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: 28px;
-      text-align: center;
-      color: #fffde7;
-      text-shadow: 0 1px 6px #0f9d5877, 0 2px 8px #0002;
-      letter-spacing: 0.8px;
-      line-height: 1.5;
     }
     .flags {
       font-size: 2.2rem;
@@ -212,15 +179,6 @@
       60% { opacity: 1; transform: scale(1.1);}
       100% { opacity: 1; transform: scale(1);}
     }
-    .footer {
-      margin-top: 44px;
-      font-size: 1.03rem;
-      color: #fffde7cc;
-      text-align: center;
-      opacity: 0.75;
-      letter-spacing: 0.8px;
-      font-family: var(--main-font);
-    }
     /* Palm tree SVGs - Kerala/Saudi vibe */
     .palms {
       position: fixed;
@@ -231,34 +189,28 @@
       pointer-events: none;
       z-index: 0;
       user-select: none;
-      opacity: 0.12;
+      opacity: 0.14;
       height: 17vw;
       min-height: 110px;
       max-height: 180px;
+      filter: blur(1px) brightness(1.01) drop-shadow(0 22px 44px rgba(255,246,171,0.22));
     }
-    /* Music controls */
-    #music-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-      margin-top: -22px;
+    /* Animated floating golden sparkles */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: radial-gradient(circle,#ffe869 30%,#fcff8292 95%, transparent 100%);
+      opacity: 0.8;
+      animation: sparkleFloat 7s infinite linear alternate;
     }
-    #music-controls button {
-      background: rgba(255,255,255,0.17);
-      border: none;
-      color: #fff;
-      font-size: 1.1em;
-      border-radius: 6px;
-      cursor: pointer;
-      padding: 6px 16px;
-      box-shadow: 0 1px 6px #43cea288;
-      transition: background 0.2s;
-    }
-    #music-controls button:hover {
-      background: #fcff82;
-      color: #185a9d;
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0) scale(1);}
+      50% { opacity: 1; transform: translateY(-60px) scale(1.4);}
+      100% { opacity: 0.6; transform: translateY(0) scale(1);}
     }
     @media (max-width: 768px) {
       .glass-panel {
@@ -268,10 +220,6 @@
       }
       .headline {
         font-size: 1.5rem;
-      }
-      .subtitle {
-        font-size: 1rem;
-        padding: 0 2px;
       }
       .date-input-row {
         flex-direction: column;
@@ -288,14 +236,13 @@
       .label {
         font-size: 0.8rem;
       }
-      .profile-pic-card img { width: 88px; height: 88px;}
       .palms { max-height: 90px; }
-      .footer { font-size: 0.96rem; }
     }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
+  <div id="sparkles"></div>
   <div class="container">
     <div class="flags">
       <span title="Saudi Arabia" role="img" aria-label="Saudi Arabia">🇸🇦</span>
@@ -303,28 +250,12 @@
       <span title="Kerala, India" role="img" aria-label="Kerala, India">🇮🇳</span>
       <span style="font-size:1.6rem;">🌴</span>
     </div>
-    <div class="profile-pic-card">
-      <!-- Replace src with your hosted image file -->
-      <img src="user-photo.jpeg" alt="Profile Picture">
-    </div>
-    <div class="headline">Kerala Leave Countdown</div>
-    <div class="subtitle">
-      <span style="font-size:1.3em;">🛫</span>
-      Counting down the days until you leave Saudi Arabia<br>and return home to Kerala, India! <span style="font-size:1.3em;">🏝️</span>
-    </div>
+    <!-- Only one headline -->
+    <div class="headline">Countdown</div>
     <div class="date-input-row">
       <label for="target-date">Your Leave Date &amp; Time:</label>
       <input type="datetime-local" id="target-date" value="2027-04-09T00:00" />
     </div>
-    <div id="music-controls">
-      <button id="playPauseBtn">⏸️ Pause Music</button>
-      <span style="font-size:1.1em; color:#fcff82;">Enjoy your Kerala vibes! 🎶</span>
-    </div>
-    <audio id="bg-music" loop autoplay>
-      <!-- You can use any mp3 url here. Example: a royalty-free upbeat instrumental -->
-      <source src="music.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
     <div id="countdown" class="glass-panel">
       <div class="time-box"><span class="number" id="years">0</span><span class="label">Years</span></div>
       <div class="time-box"><span class="number" id="months">0</span><span class="label">Months</span></div>
@@ -337,12 +268,8 @@
       🎉 Your leave day has arrived! Welcome home to Kerala! 🇮🇳🌴<br>
       <span style="font-size:1.8rem;">🥳</span>
     </div>
-    <div class="footer">
-      Made with <span style="color:#f9f871; font-size:1.2em;">♥</span> just for you.<br>
-      Wishing you a happy and safe journey!
-    </div>
+    <!-- No footer, no repeated Countdown text -->
   </div>
-  <!-- Kerala/Saudi palm tree SVGs for atmosphere -->
   <div class="palms">
     <svg width="100%" height="100%" viewBox="0 0 1440 250" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g opacity="0.5">
@@ -425,27 +352,16 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Music controls
-    const music = document.getElementById('bg-music');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    let isPlaying = true;
-    playPauseBtn.onclick = function() {
-      if (isPlaying) {
-        music.pause();
-        playPauseBtn.textContent = '▶️ Play Music';
-      } else {
-        music.play();
-        playPauseBtn.textContent = '⏸️ Pause Music';
-      }
-      isPlaying = !isPlaying;
+    // Sparkle generator
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = (75 + Math.random() * 10) + 'vh';
+      sparkle.style.animationDelay = (Math.random() * 6) + 's';
+      document.getElementById('sparkles').appendChild(sparkle);
     }
-    // Optional: try auto-play workaround on interaction for some browsers
-    document.body.addEventListener('click', function firstMusicStart() {
-      music.play();
-      document.body.removeEventListener('click', firstMusicStart);
-    });
+    for(let i=0;i<22;i++) createSparkle();
   </script>
 </body>
-
 </html>
-
